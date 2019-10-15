@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Objetos en JavaScript</title>
+	</head>
+	<body>
+		<h1>Objetos en JavaScript</h1>
+
+		<script>
+			const crearProducto = function(n, s, p, d){ //<-- function crearProducto(){...}
+				let elProducto = new Object()
+
+				//Propiedades
+				elProducto.nombre = n
+				elProducto.stock = s
+				elProducto.precio = p
+				elProducto.disponible = d
+
+				//Metodos
+				elProducto.Mostrar = function(){ //<-- Closure (funcion creada dentro de otra funcion)
+					
+					window.document.write(`<p>Hay ${elProducto.stock} unidades de <strong>"${elProducto.nombre}"</strong> que valen ARG ${elProducto.precio} cada uno.</p>`) //<-- Template String
+
+				}
+
+				return elProducto
+			}
+			/////////////////////////////////////////////////
+			//Datos en variables sueltas
+			let nombre = "Café"
+			let stock = 500
+			let precio = 68.55
+			let disponible = true
+
+			//Datos en una colección Array
+			let producto = ["Jugo", 520, 15.65, false]
+
+			//Datos en un objeto (literal)
+			let otroProducto = {
+				nombre : "Agua finamente gasificada",
+				stock : 750,
+				precio : 85.45,
+				disponible : true
+			}
+
+			//Datos en un objeto (diferido)
+			let tercerProducto = new Object()
+
+			tercerProducto.nombre = "Te de Hierbas Orientales"
+			tercerProducto.stock = 150
+			tercerProducto.precio = 135.65
+			tercerProducto.disponible = false
+
+			let cuartoProducto = crearProducto("Malbec", 450, 185.99, true)
+			let ultimoProducto = crearProducto("Chocolate Semi-Amargo", 650, 450.35, false)
+
+			cuartoProducto.Mostrar()
+			ultimoProducto.Mostrar()
+
+			//Imprimir producto
+			//ES5
+			//window.document.write("Hay " + tercerProducto.stock + " unid. de " + tercerProducto.nombre + " que valen ARG " + tercerProducto.precio + " c/u")
+			
+			//ES6
+			//window.document.write(`Hay ${ultimoProducto.stock} unidades de "${ultimoProducto.nombre}" que valen ARG ${ultimoProducto.precio} cada uno.`) //<-- Template String
+		</script>
+	</body>
+</html>
