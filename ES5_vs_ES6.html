@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>ES5 vs ES6</title>
+	</head>
+	<body>
+		<h1>ECMAScript 5 vs ECMAScript 6</h1>
+
+		<script>
+			/* 1) Variables */
+			//ES5
+			//var dato = "Hola mundo desde una variable"
+
+			//ES6
+			let dato = "Hola mundo desde una verdadera variable"
+			const datoFijo = "Hola mundo desde una constante"
+
+
+			/* 2) Funciones (parte 1) */
+			//ES5
+			/*
+			window.saludar = function(saludo){
+				console.log( saludo )
+			}
+
+			function saludar(saludo){ //<-- Funcion Nominada
+				console.log( saludo )
+			}
+			*/
+
+			//ES6
+			const saludar = function(saludo){
+				console.log( saludo )
+			}
+
+			/* 3) Funciones (parte 2) */
+			//ES5
+			/*
+			var despedirse = function(adios){
+				alert(adios)
+			}
+			*/
+			//ES6
+			const despedirse = (adios) => { //<-- Arrow Function
+				window.document.write(adios)
+			}
+		</script>
+	</body>
+</html>
