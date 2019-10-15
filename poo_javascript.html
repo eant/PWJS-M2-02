@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>POO en JavaScript</title>
+  </head>
+  <body>
+    <h1>POO en JavaScript</h1>
+    <script src="producto.class.js"></script>
+    <script>
+      let unProducto = new Producto("Café Torrado", 340, 94.99, true) //<-- Instanciando un objeto "Producto"
+      let otroProducto = new Producto("Jugo de Naranja", 250, 55.85, false)
+      let tercerProducto = new Producto("Té de Mazanilla", 185, 199.99)
+
+      otroProducto.aplicarDescuento(10)
+
+      unProducto.Mostrar() //<-- Invoco al metodo Mostrar a traves de la "instancia" del objeto Producto
+      otroProducto.Mostrar()
+      tercerProducto.Mostrar()
+
+      console.log( unProducto )
+      console.log( otroProducto )
+      console.log( tercerProducto )
+
+      ////////////////////
+      //ACA PROGRAMO COSAS POWER CON AJAX
+      let productos = Producto.parse(ajax.response) //<-- de JSON a Producto
+
+    </script>
+  </body>
+</html>
