@@ -51,5 +51,30 @@ class Producto {
     this.precio = this.precio - importe
   }
 
-  //Metodos de Clase
+  //Metodos de Clase (estáticos)
+  static parse(json){ //<-- Ej: '[{"nombre":"Café Torrado","stock":600,"precio":85.65,"disponible":false},{"nombre":"Jugo de Naranja","stock":450,"precio":15.45,"disponible":true}]'
+    //Acá hay que h acer magia para que se conviertan en objetos 'Producto'
+    let datos = JSON.parse(json) //<-- de JSON a Object
+
+    console.log("Estos son los datos:")
+    console.log(datos)
+
+    if( datos instanceof Array ){
+      console.log("Voy a convertir muchos Object en Producto")
+    } else if( datos instanceof Object ){
+      console.log("Voy a convertir un Object en Producto")
+    } else {
+      console.log("Ya fue... no convierto nada en Producto")
+    }
+
+  }
 }
+
+
+
+
+
+
+
+
+

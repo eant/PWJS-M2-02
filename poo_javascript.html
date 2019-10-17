@@ -23,9 +23,36 @@
       console.log( tercerProducto )
 
       ////////////////////
-      //ACA PROGRAMO COSAS POWER CON AJAX
-      let productos = Producto.parse(ajax.response) //<-- de JSON a Producto
+      // ACA PROGRAMO COSAS POWER CON AJAX
+
+      const miniFirefox = new XMLHttpRequest()
+      miniFirefox.open("GET", "https://api.myjson.com/bins/1giaf3") //<-- Metodo de Instancia
+      // Evento
+      miniFirefox.onload = function(){ //<-- Petición exitosa!
+        
+        console.log(this)
+
+        if( this.status == 200 ){ //<-- Respuesta exitosa!
+
+          console.log( this.response )
+          
+          //let productos = JSON.parse(this.response) //<-- de JSON a Object
+          let productos = Producto.parse(this.response) //<-- de JSON a Producto
+
+          console.log(productos)
+
+        }
+
+      }
+      miniFirefox.onerror = function(){
+
+      }
+      //miniFirefox.send() //<-- Metodo de Instancia
+
 
     </script>
   </body>
 </html>
+
+
+
