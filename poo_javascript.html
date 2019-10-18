@@ -34,12 +34,13 @@
 
         if( this.status == 200 ){ //<-- Respuesta exitosa!
 
-          console.log( this.response )
-          
+                   
           //let productos = JSON.parse(this.response) //<-- de JSON a Object
           let productos = Producto.parse(this.response) //<-- de JSON a Producto
 
-          console.log(productos)
+          productos.forEach(producto => {
+            producto.Mostrar()
+          })
 
         }
 
@@ -47,9 +48,7 @@
       miniFirefox.onerror = function(){
 
       }
-      //miniFirefox.send() //<-- Metodo de Instancia
-
-
+      miniFirefox.send() //<-- Metodo de Instancia
     </script>
   </body>
 </html>
