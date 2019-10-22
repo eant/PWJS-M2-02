@@ -29,8 +29,9 @@
 
 			<!-- AREA PRODUCTOS DESTACADOS -->
 			<section id="productos-destacados" class="row">
+
 				<!-- Inicio Producto #1 -->
-				<article class="col-lg-4 col-md-6 mb-4 producto">
+				<article class="col-lg-4 col-md-6 mb-4 d-none producto">
 					<div class="card h-100">
 						<a href="#">
 							<img class="card-img-top" src="http://placehold.it/700x400" alt="">
@@ -39,63 +40,13 @@
 							<h4 class="card-title">
 								<a href="#">Producto X</a>
 							</h4>
-							<h5>$999.99</h5>
+							<h5 class="btn btn-warning">$999.99</h5>
 							<p class="card-text">No deje pasar esta oportunidad... COMPRE YA!</p>
 						</div>
 					</div>
 				</article>
 				<!-- Fin de Producto #1 -->
 
-				<!-- Inicio Producto #2 -->
-				<article class="col-lg-4 col-md-6 mb-4 producto">
-					<div class="card h-100">
-						<a href="#">
-							<img src="http://placehold.it/700x400" class="card-img-top" alt="">
-						</a>
-						<div class="card-body">
-							<h4 class="card-title">
-								<a href="#">Producto X</a>
-							</h4>
-							<h5>$999.99</h5>
-							<p class="card-text">No deje pasar esta oportunidad... COMPRE YA!</p>
-						</div>
-					</div>
-				</article>
-				<!-- Fin de Producto #2 -->
-
-				<!-- Inicio Producto #3 -->
-				<article class="col-lg-4 col-md-6 mb-4 producto">
-					<div class="card h-100">
-						<a href="#">
-							<img src="http://placehold.it/700x400" class="card-img-top" alt="">
-						</a>
-						<div class="card-body">
-							<h4 class="card-title">
-								<a href="#">Producto X</a>
-							</h4>
-							<h5>$999.99</h5>
-							<p class="card-text">No deje pasar esta oportunidad... COMPRE YA!</p>
-						</div>
-					</div>
-				</article>
-				<!-- Fin de Producto #3 -->
-
-				<!-- Inicio Producto #4 -->
-				<article class="col-lg-4 col-md-6 mb-4 producto">
-					<div class="card h-100">
-						<a href="#">
-							<img src="http://placehold.it/700x400" class="card-img-top" alt="">
-						</a>
-						<div class="card-body">
-							<h4 class="card-title">
-								<a href="#">Producto X</a>
-							</h4>
-							<h5>$999.99</h5>
-							<p class="card-text">No deje pasar esta oportunidad... COMPRE YA!</p>
-						</div>
-					</div>
-				</article>
-				<!-- Fin de Producto #4 -->
 			</section>
 		</main>
 		<footer class="py-5 bg-dark">
@@ -121,13 +72,14 @@
 					let productos = Producto.parse(this.response) //<-- de JSON a Producto
 					
 					productos.forEach(producto => {
-						console.log(producto)
-						//producto.Mostrar()
+						//console.log(producto)
+						producto.Mostrar()
 					})
 
 				}
 
 			}
+			miniFirefox.send()
 		</script>
 	</body>
 </html>

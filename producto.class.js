@@ -41,9 +41,17 @@ class Producto {
 
   //Metodos de Instancia
   Mostrar(){
-    let color = this.disponible ? "green" : "red"
+    let ficha = document.querySelector(".producto").cloneNode(true)
 
-    document.write(`<p style="color:${color}">Hay <strong>${this.stock}</strong> unid. de <strong>${this.nombre}</strong> que valen <em>ARG${this.precio}</em> c/u</p>`)
+        ficha.querySelector(".card-title a").innerText = this.nombre
+        ficha.querySelector(".card-body h5").innerText = this.Precio
+        ficha.querySelector(".card-img-top").src = this.imagen
+
+        ficha.classList.remove("d-none")
+
+    document.querySelector("#productos-destacados").appendChild( ficha )
+
+    console.log( ficha )
   }
 
   aplicarDescuento(valor){
