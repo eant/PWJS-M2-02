@@ -1,10 +1,11 @@
 class Producto {
   //Constructor
-  constructor(n, s, p, d = true){
+  constructor(n, s, p, i, d = true){
     //Atributos
     this.nombre = n
     this.stock = s
     this.precio = p
+    this.imagen = i
     this.disponible = d //<-- Por default asigna "true"
   }
 
@@ -61,26 +62,12 @@ class Producto {
 
     if( datos instanceof Array ){
 
-      //1) Crear un Array nuevo para guardar los objetos Producto
-      let productos = new Array()
-
-      //2) Recorrer el Array de Object para instanciar objetos Producto
-      datos.forEach(item => {
-        
-        //3) Instanciar un objeto Producto con los datos de cada Object
-        let producto = new Producto(item.nombre, item.stock, item.precio, item.disponible)
-        
-        //4) Guardar el objeto Producto instanciado en el Array nuevo
-        productos.push(producto)
-        
-      })
-      //5) Retornar el Array nuevo una vez que se hayan instanciado todos los objetos Producto
-      return productos
+      //1) Recorrer el Array de Object para instanciar objetos Producto y retornarlos
+      return datos.map(item => new Producto(item.Nombre, item.Stock, item.Precio, item.Imagen) ) //2) <-- Instanciar un objeto Producto con los datos de cada Object
 
     } else if( datos instanceof Object ){
 
-      let producto = new Producto(datos.nombre, datos.stock, datos.precio, datos.disponible)
-      return producto
+      return new Producto(datos.Nombre, datos.Stock, datos.Precio, datos.Imagen)
 
     } else {
       console.error("Ya fue... no convierto nada en Producto")

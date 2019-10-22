@@ -34,10 +34,10 @@
 					<div class="card h-100">
 						<a href="#">
 							<img class="card-img-top" src="http://placehold.it/700x400" alt="">
-		  				</a>
+						</a>
 						<div class="card-body">
 							<h4 class="card-title">
-			  					<a href="#">Producto X</a>
+								<a href="#">Producto X</a>
 							</h4>
 							<h5>$999.99</h5>
 							<p class="card-text">No deje pasar esta oportunidad... COMPRE YA!</p>
@@ -46,16 +46,15 @@
 				</article>
 				<!-- Fin de Producto #1 -->
 
-
 				<!-- Inicio Producto #2 -->
 				<article class="col-lg-4 col-md-6 mb-4 producto">
 					<div class="card h-100">
 						<a href="#">
 							<img src="http://placehold.it/700x400" class="card-img-top" alt="">
-		  				</a>
+						</a>
 						<div class="card-body">
 							<h4 class="card-title">
-			  					<a href="#">Producto X</a>
+								<a href="#">Producto X</a>
 							</h4>
 							<h5>$999.99</h5>
 							<p class="card-text">No deje pasar esta oportunidad... COMPRE YA!</p>
@@ -69,10 +68,10 @@
 					<div class="card h-100">
 						<a href="#">
 							<img src="http://placehold.it/700x400" class="card-img-top" alt="">
-		  				</a>
+						</a>
 						<div class="card-body">
 							<h4 class="card-title">
-			  					<a href="#">Producto X</a>
+								<a href="#">Producto X</a>
 							</h4>
 							<h5>$999.99</h5>
 							<p class="card-text">No deje pasar esta oportunidad... COMPRE YA!</p>
@@ -86,10 +85,10 @@
 					<div class="card h-100">
 						<a href="#">
 							<img src="http://placehold.it/700x400" class="card-img-top" alt="">
-		  				</a>
+						</a>
 						<div class="card-body">
 							<h4 class="card-title">
-			  					<a href="#">Producto X</a>
+								<a href="#">Producto X</a>
 							</h4>
 							<h5>$999.99</h5>
 							<p class="card-text">No deje pasar esta oportunidad... COMPRE YA!</p>
@@ -97,7 +96,6 @@
 					</div>
 				</article>
 				<!-- Fin de Producto #4 -->
-
 			</section>
 		</main>
 		<footer class="py-5 bg-dark">
@@ -107,5 +105,33 @@
 		</footer>
 		<script src="https://blackrockdigital.github.io/startbootstrap-shop-item/vendor/jquery/jquery.min.js"></script>
 		<script src="https://blackrockdigital.github.io/startbootstrap-shop-item/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<script src="producto.class.js"></script>
+		<script>
+		/*
+			let unaSimplePrueba = new Producto("Prueba", 400, 12.45, false)
+
+			console.log( unaSimplePrueba )
+		*/
+			const miniFirefox = new XMLHttpRequest()
+			miniFirefox.open("GET", "https://api.myjson.com/bins/dcg2p")
+			miniFirefox.onload = function(){ //<-- Petición exitosa!
+   
+				if( this.status == 200 ){ //<-- Respuesta exitosa!
+				   
+					let productos = Producto.parse(this.response) //<-- de JSON a Producto
+					
+					productos.forEach(producto => {
+						console.log(producto)
+						//producto.Mostrar()
+					})
+
+				}
+
+			}
+		</script>
 	</body>
 </html>
+
+
+
+
