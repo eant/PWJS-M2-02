@@ -58,17 +58,26 @@
 		<script src="https://blackrockdigital.github.io/startbootstrap-shop-item/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 		<script src="producto.class.js"></script>
 		<script>
-		/*
-			let unaSimplePrueba = new Producto("Prueba", 400, 12.45, false)
+			/* Persistencia en JavaScript con la API Storage */
+			// window.localStorage && window.sessionStorage //
 
-			console.log( unaSimplePrueba )
-		*/
+			//window.localStorage.setItem("USUARIOS", "Tambien voy a guardar los datos de los usuarios :(")
+			//alert( window.localStorage.getItem("PRODUCTOS") )
+			//window.localStorage.removeItem("USUARIOS")
+			//window.localStorage.clear()
+
+			// YO, JAVASCRIPT PROMETO CONVERTIR Y MOSTRAR PRODUCTOS CUANDO TENGA DATOS //
+
+			////////////////////////////////////////
 			const miniFirefox = new XMLHttpRequest()
 			miniFirefox.open("GET", "https://api.myjson.com/bins/dcg2p")
 			miniFirefox.onload = function(){ //<-- Petición exitosa!
    
 				if( this.status == 200 ){ //<-- Respuesta exitosa!
 				   
+					//Guardar los datos de la peticion
+					window.localStorage.setItem("PRODUCTOS", this.response)
+
 					let productos = Producto.parse(this.response) //<-- de JSON a Producto
 					
 					productos.forEach(producto => {
