@@ -67,28 +67,67 @@
 			//window.localStorage.clear()
 
 			// YO, JAVASCRIPT PROMETO CONVERTIR Y MOSTRAR PRODUCTOS CUANDO TENGA DATOS //
+			const promesa  = new Promise(function(ok, error){
+
+				window.setTimeout(function(){
+
+					let numerito = Math.random()
+
+					if( numerito < 0.5 ){
+						ok(`Vamoooo!!!... "${numerito}" vale menos que 0,5`) //<-- Se ejecuta el then()...
+					} else {
+						error(`Nooooo!!!... "${numerito}" vale más que 0,5`) //<-- Se ejecuta el catch()...
+					}
+
+				}, 2000) //<-- ... despues de X segundos
+
+			})
+
+			promesa.then(function(rta){ //<-- Esto ocurre cuando "sale bien"
+
+				alert(`${rta} (si lees esto es porque estas dentro del metodo "then()")`)
+
+			})
+
+			promesa.catch(function(rta){ //<-- Esto ocurre cuando "sale mal"
+
+				alert(`${rta} (y si lees esto es porque estas dentro del metodo "catch()")`)
+
+			})
+
+			promesa.finally(function(){
+				confirm("Se entendio???")
+			})
 
 			////////////////////////////////////////
-			const miniFirefox = new XMLHttpRequest()
-			miniFirefox.open("GET", "https://api.myjson.com/bins/dcg2p")
-			miniFirefox.onload = function(){ //<-- Petición exitosa!
-   
-				if( this.status == 200 ){ //<-- Respuesta exitosa!
-				   
-					//Guardar los datos de la peticion
-					window.localStorage.setItem("PRODUCTOS", this.response)
+			if( !window.localStorage.getItem("PRODUCTOS") ){
+				//Si NO existe el LS... traer los datos de la API
+				const miniFirefox = new XMLHttpRequest()
+				miniFirefox.open("GET", "https://api.myjson.com/bins/dcg2p")
+				miniFirefox.onload = function(){ //<-- Petición exitosa!
+					if( this.status == 200 ){ //<-- Respuesta exitosa!
 
-					let productos = Producto.parse(this.response) //<-- de JSON a Producto
-					
-					productos.forEach(producto => {
-						//console.log(producto)
-						producto.Mostrar()
-					})
+						//Guardar los datos de la peticion
+						window.localStorage.setItem("PRODUCTOS", this.response)
 
+						let productos = Producto.parse(this.response) //<-- de JSON a Producto
+						
+						productos.forEach(producto => {
+							producto.Mostrar()
+						})
+
+					}
 				}
+				miniFirefox.send()
+			} else {
+				//Sino... efectivamente existe un LS, entonces usarlo para crear/mostrar objetos PRODUCTO
 
+				let productos = Producto.parse( window.localStorage.getItem("PRODUCTOS") )
+
+				productos.forEach(producto => {
+					producto.Mostrar()
+				})
 			}
-			miniFirefox.send()
 		</script>
 	</body>
 </html>
