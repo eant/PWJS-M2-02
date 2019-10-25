@@ -69,65 +69,51 @@
 			// YO, JAVASCRIPT PROMETO CONVERTIR Y MOSTRAR PRODUCTOS CUANDO TENGA DATOS //
 			const promesa  = new Promise(function(ok, error){
 
-				window.setTimeout(function(){
+				if( !window.localStorage.getItem("PRODUCTOS") ){
+					//Si NO existe el LS... traer los datos de la API
+					const miniFirefox = new XMLHttpRequest()
+					miniFirefox.open("GET", "https://api.myjson.com/bins/dcg2p")
+					miniFirefox.onload = function(){ //<-- Petición exitosa :)
+						if( this.status == 200 ){ //<-- Respuesta exitosa!
+							//Guardar los datos de la peticion
+							window.localStorage.setItem("PRODUCTOS", this.response)
 
-					let numerito = Math.random()
-
-					if( numerito < 0.5 ){
-						ok(`Vamoooo!!!... "${numerito}" vale menos que 0,5`) //<-- Se ejecuta el then()...
-					} else {
-						error(`Nooooo!!!... "${numerito}" vale más que 0,5`) //<-- Se ejecuta el catch()...
+							ok( this.response ) //<-- Ejecutar el metodo then()...
+						} else {
+							this.onerror()
+						}
 					}
-
-				}, 2000) //<-- ... despues de X segundos
+					miniFirefox.onerror = function(){ //<-- Petición NO exitosa :(
+						error( this.statusText ) //<-- Ejecutar el metodo catch()...
+					}
+					miniFirefox.send() //<-- Ejecutar la petición asincronica (...esperar a que responda el server)
+				} else {
+					//Sino... efectivamente existe un LS, entonces... 
+					ok( window.localStorage.getItem("PRODUCTOS") ) //<-- Ejecutar el metodo then()...
+				}
 
 			})
 
-			promesa.then(function(rta){ //<-- Esto ocurre cuando "sale bien"
+			promesa.then(function(rta){ //<-- Esto ocurre cuando hay datos (desde una API o de un Storage)
 
-				alert(`${rta} (si lees esto es porque estas dentro del metodo "then()")`)
+				// Usar los datos para crear/mostrar objetos PRODUCTO
+				let productos = Producto.parse( rta )
+
+				productos.forEach(producto => {
+					producto.Mostrar()
+				})
 
 			})
 
 			promesa.catch(function(rta){ //<-- Esto ocurre cuando "sale mal"
 
-				alert(`${rta} (y si lees esto es porque estas dentro del metodo "catch()")`)
+				document.querySelector("#productos-destacados").innerHTML = `<div class="alert alert-danger" role="alert">${rta}</div>`
 
 			})
 
 			promesa.finally(function(){
-				confirm("Se entendio???")
+				confirm("¿¿Funciono??")
 			})
-
-			////////////////////////////////////////
-			if( !window.localStorage.getItem("PRODUCTOS") ){
-				//Si NO existe el LS... traer los datos de la API
-				const miniFirefox = new XMLHttpRequest()
-				miniFirefox.open("GET", "https://api.myjson.com/bins/dcg2p")
-				miniFirefox.onload = function(){ //<-- Petición exitosa!
-					if( this.status == 200 ){ //<-- Respuesta exitosa!
-
-						//Guardar los datos de la peticion
-						window.localStorage.setItem("PRODUCTOS", this.response)
-
-						let productos = Producto.parse(this.response) //<-- de JSON a Producto
-						
-						productos.forEach(producto => {
-							producto.Mostrar()
-						})
-
-					}
-				}
-				miniFirefox.send()
-			} else {
-				//Sino... efectivamente existe un LS, entonces usarlo para crear/mostrar objetos PRODUCTO
-
-				let productos = Producto.parse( window.localStorage.getItem("PRODUCTOS") )
-
-				productos.forEach(producto => {
-					producto.Mostrar()
-				})
-			}
 		</script>
 	</body>
 </html>
