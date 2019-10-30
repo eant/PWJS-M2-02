@@ -67,6 +67,7 @@
 			//window.localStorage.clear()
 
 			// YO, JAVASCRIPT PROMETO CONVERTIR Y MOSTRAR PRODUCTOS CUANDO TENGA DATOS //
+		/*
 			const promesa  = new Promise(function(ok, error){
 
 				if( !window.localStorage.getItem("PRODUCTOS") ){
@@ -110,10 +111,55 @@
 				document.querySelector("#productos-destacados").innerHTML = `<div class="alert alert-danger" role="alert">${rta}</div>`
 
 			})
-
+		*/
+/*
 			promesa.finally(function(){
 				confirm("¿¿Funciono??")
 			})
+*/
+			//* AJAX Moderno con el metodo fetch() *//
+			const crearCatalogo = function(items){
+
+				let productos = Producto.parse(items)
+				productos.forEach( producto => { producto.Mostrar() })
+			}
+
+			if( !window.localStorage.getItem("PRODUCTOS") ){ // ↓ Obtener los datos de la API
+				fetch("https://api.myjson.com/bins/dcg2p")
+				.then(rta => rta.json() )
+				.then(items => {
+					window.localStorage.setItem("PRODUCTOS", JSON.stringify(items) )
+					crearCatalogo(items) //<-- Los paso como Object
+				})
+			} else { // ↓ Obtener los datos del Local Storage
+				crearCatalogo( window.localStorage.getItem("PRODUCTOS") ) //<-- Los paso como String
+			}
+
+			//Funcionalidad Modelo:
+			/*
+			fetch("https://api.myjson.com/bins/dcg2p").then(function(rta){
+				debugger
+
+				return rta.json()
+
+			}).then(function(items){
+
+				return items[2]
+
+			}).then(function(item){
+
+				return item.Nombre
+
+			}).then(function(nombre){
+
+				return nombre.substr(0,1)
+
+			}).then(function(letra){
+
+				console.log(`La primer letra es: ${letra}`)
+
+			})
+			*/
 		</script>
 	</body>
 </html>
