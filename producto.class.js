@@ -40,16 +40,25 @@ class Producto {
   }
 
   //Metodos de Instancia
-  Mostrar(){
-    let ficha = document.querySelector(".producto").cloneNode(true)
+  Mostrar(selector){ //← Ej: "#productos-destacados"
+    let ficha = document.createElement("article") // ← <article></article>
 
-        ficha.querySelector(".card-title a").innerText = this.nombre
-        ficha.querySelector(".card-body h5").innerText = this.Precio
-        ficha.querySelector(".card-img-top").src = this.imagen
+        ficha.classList.add("col-lg-4", "col-md-6", "mb-4", "producto")// ← <article class="col-lg-4 col-md-6 mb-4s producto"></article>
 
-        ficha.classList.remove("d-none")
+        ficha.innerHTML = `<div class="card h-100 bg-dark text-light">
+                            <a href="#">
+                              <img class="card-img-top" src="${this.imagen}" alt="${this.nombre}">
+                            </a>
+                            <div class="card-body">
+                              <h4 class="card-title">
+                                <a href="#">${this.nombre}</a>
+                              </h4>
+                              <h5 class="btn btn-warning">${this.Precio}</h5>
+                              <p class="card-text">${this.stock} unid.</p>
+                            </div>
+                          </div>`
 
-    document.querySelector("#productos-destacados").appendChild( ficha )
+    document.querySelector(selector).appendChild( ficha )
 
     console.log( ficha )
   }
