@@ -59,8 +59,6 @@ class Producto {
                           </div>`
 
     document.querySelector(selector).appendChild( ficha )
-
-    console.log( ficha )
   }
 
   aplicarDescuento(valor){
