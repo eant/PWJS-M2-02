@@ -7,6 +7,13 @@ class Producto {
     this.precio = p
     this.imagen = i
     this.disponible = d //<-- Por default asigna "true"
+    this.vDOM = document.createElement("article") // ← <article></article>
+    
+    this.state = {
+      anexado : false,
+      version : 0
+    }
+
   }
 
   //Propiedades Lectura/Escritura (getters & setters)
@@ -26,26 +33,23 @@ class Producto {
 
   set Disponible(value){
 
-    if( value == this.disponible ){
-      alert("La disponibilidad ya está en: " + value)
-      return
-    }
+    let accion = value ? "habilitar" : "deshabilitar"
 
-    let estado = value ? "habilitar" : "deshabilitar"
-
-    if( confirm(`Desea ${estado} el producto "${this.nombre}"`) ){
+    if( confirm(`Desea ${accion} el producto "${this.nombre}"`) )
       this.disponible = value
-    }
 
   }
 
   //Metodos de Instancia
   Mostrar(selector){ //← Ej: "#productos-destacados"
-    let ficha = document.createElement("article") // ← <article></article>
 
-        ficha.classList.add("col-lg-4", "col-md-6", "mb-4", "producto")// ← <article class="col-lg-4 col-md-6 mb-4s producto"></article>
+    let estilo = this.disponible ? "bg-white text-dark" : "bg-dark text-light"
 
-        ficha.innerHTML = `<div class="card h-100 bg-dark text-light">
+    // ↓ Manipulacion de Estructura
+    this.vDOM.classList.add("col-lg-4", "col-md-6", "mb-4", "producto")// ← <article class="col-lg-4 col-md-6 mb-4s producto"></article>
+
+    // ↓ Manipulacion de Contenido
+    this.vDOM.innerHTML = `<div class="card h-100 ${estilo}">
                             <a href="#">
                               <img class="card-img-top" src="${this.imagen}" alt="${this.nombre}">
                             </a>
@@ -53,12 +57,31 @@ class Producto {
                               <h4 class="card-title">
                                 <a href="#">${this.nombre}</a>
                               </h4>
-                              <h5 class="btn btn-warning">${this.Precio}</h5>
+                              <h5 class="btn btn-warning m-0">${this.Precio}</h5>
+
+                              <button class="btn btn-danger">${ this.disponible ? "Desactivar" : "Activar" }</button>
+
                               <p class="card-text">${this.stock} unid.</p>
                             </div>
-                          </div>`
+                           </div>`
+    
+    // ↓ Manipulacion de Comportamiento
+    this.vDOM.querySelector("button").onclick = (e) => {
+      this.Disponible = !this.disponible
 
-    document.querySelector(selector).appendChild( ficha )
+      this.Precio = prompt("Ingrese nuevo precio:")
+
+      this.Mostrar()
+      
+      console.log( this ) //<-- El objeto padre
+      console.log( e.target ) //<-- El objeto que provoco el evento
+    }
+
+    // ↓ Anexarlo (mostrarlo) en la interfaz...
+    if( !this.state.anexado ){
+      document.querySelector(selector).appendChild( this.vDOM )
+      this.state.anexado = true
+    }
   }
 
   aplicarDescuento(valor){
