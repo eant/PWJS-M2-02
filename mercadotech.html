@@ -51,7 +51,16 @@
 			const crearCatalogo = function(items){
 
 				let productos = Producto.parse(items)
-				productos.forEach( producto => { producto.Mostrar("#ultimos-productos") })
+
+				// descuento = confirm("Aplicar descuento de 50%?") ? 50 : -1
+
+				productos.forEach( producto => {
+					
+					producto.Mostrar("#ultimos-productos")
+
+					producto.aplicarDescuento(30)
+
+				})
 			}
 
 			if( !window.localStorage.getItem("PRODUCTOS") ){ // ↓ Obtener los datos de la API
