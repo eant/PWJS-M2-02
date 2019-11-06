@@ -1,7 +1,8 @@
 class Producto {
   //Constructor
-  constructor(n, s, p, i, d = true){
+  constructor(id, n, s, p, i, d = true){
     //Atributos
+    this.ID = id
     this.nombre = n
     this.stock = s
     this.precio = p
@@ -49,6 +50,8 @@ class Producto {
     // ↓ Manipulacion de Estructura
     this.vDOM.classList.add("col-lg-4", "col-md-6", "mb-4", "producto")// ← <article class="col-lg-4 col-md-6 mb-4s producto"></article>
 
+    this.vDOM.id = `prod-${this.ID}`
+
     // ↓ Manipulacion de Contenido
     this.vDOM.innerHTML = `<div class="card h-100 ${estilo}">
                             <a href="#">
@@ -82,13 +85,7 @@ class Producto {
       this.Precio = prompt(`Por favor, indique cual es el nuevo precio del art. ${this.nombre}`)
       this.Mostrar()
     }
-/*
-    this.vDOM.querySelector(".btn-descuento").onclick = () => {
-      let valor = prompt(`Indique el % de descuento para ${this.nombre}`)
-      this.aplicarDescuento(valor)
-      this.Mostrar()
-    }
-*/
+
     this.vDOM.querySelector(".btn-descuento").onclick = this.aplicarDescuento.bind(this)
 
     // ↓ Anexarlo (mostrarlo) en la interfaz...
@@ -96,6 +93,8 @@ class Producto {
       document.querySelector(selector).appendChild( this.vDOM )
       this.state.anexado = true
     }
+
+    this.sincronizar()
   }
 
   aplicarDescuento(valor = false){
@@ -104,8 +103,30 @@ class Producto {
     
     let importe = (this.precio * valor) / 100
     this.precio = this.precio - importe
-    
+
     this.Mostrar()
+  }
+
+  sincronizar(){
+    //¿como?
+    let storage = JSON.parse( localStorage.getItem("PRODUCTOS") ) //<-- de JSON a Object
+
+
+    storage.forEach(item => {
+
+        if( item.idProducto == this.ID ){
+
+          item.Nombre = this.nombre
+          item.Stock = this.stock
+          item.Precio = this.precio
+          item.Disponible = this.disponible
+          return
+        }
+
+    })
+
+    localStorage.setItem("PRODUCTOS", JSON.stringify(storage) ) //<-- de Object a JSON
+
   }
 
   //Metodos de Clase (estáticos)
@@ -116,17 +137,14 @@ class Producto {
 
     let datos = (typeof json == "string") ? JSON.parse(json) : json
 
-    console.log("Estos son los datos:")
-    console.log(datos)
-
     if( datos instanceof Array ){
 
       //1) Recorrer el Array de Object para instanciar objetos Producto y retornarlos
-      return datos.map(item => new Producto(item.Nombre, item.Stock, item.Precio, item.Imagen) ) //2) <-- Instanciar un objeto Producto con los datos de cada Object
+      return datos.map(item => new Producto(item.idProducto, item.Nombre, item.Stock, item.Precio, item.Imagen) ) //2) <-- Instanciar un objeto Producto con los datos de cada Object
 
     } else if( datos instanceof Object ){
 
-      return new Producto(datos.Nombre, datos.Stock, datos.Precio, datos.Imagen)
+      return new Producto(datos.idProducto, datos.Nombre, datos.Stock, datos.Precio, datos.Imagen)
 
     } else {
       console.error("Ya fue... no convierto nada en Producto")
