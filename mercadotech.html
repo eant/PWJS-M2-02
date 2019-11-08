@@ -45,8 +45,23 @@
 		</footer>
 		<script src="https://blackrockdigital.github.io/startbootstrap-shop-item/vendor/jquery/jquery.min.js"></script>
 		<script src="https://blackrockdigital.github.io/startbootstrap-shop-item/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<script src="https://apis.google.com/js/api:client.js"></script>
 		<script src="producto.class.js"></script>
 		<script>
+			//////////// LOGIN CON GOOGLE ////////////
+
+			gapi.load("auth2", function(){
+
+				window.auth = gapi.auth2.init({
+					client_id : "909599252120-atl6q5v39sj6rg1d397f8h0gui0ssnhh.apps.googleusercontent.com",
+					cookiepolicy : "single_host_origin"
+				})
+
+			})
+
+			//////////// LOGIN CON GOOGLE ////////////
+			
+
 			//* AJAX Moderno con el metodo fetch() *//
 			const crearCatalogo = function(items){
 
@@ -58,7 +73,7 @@
 					
 					producto.Mostrar("#ultimos-productos")
 
-					producto.aplicarDescuento(30)
+					//producto.aplicarDescuento(30)
 
 				})
 			}

@@ -39,6 +39,7 @@ class Producto {
     if( confirm(`Desea ${accion} el producto "${this.nombre}"`) )
       this.disponible = value
 
+    this.sincronizar()
   }
 
   //Metodos de Instancia
@@ -55,7 +56,7 @@ class Producto {
     // ↓ Manipulacion de Contenido
     this.vDOM.innerHTML = `<div class="card h-100 ${estilo}">
                             <a href="#">
-                              <img class="card-img-top" src="${this.imagen}" alt="${this.nombre}">
+                              <img class="card-img-top img-fluid" src="${this.imagen}" alt="${this.nombre}">
                             </a>
                             <div class="card-body">
                               <h4 class="card-title">
@@ -84,9 +85,16 @@ class Producto {
     this.vDOM.querySelector(".btn-precio").onclick = () => {
       this.Precio = prompt(`Por favor, indique cual es el nuevo precio del art. ${this.nombre}`)
       this.Mostrar()
+      this.sincronizar()
     }
 
     this.vDOM.querySelector(".btn-descuento").onclick = this.aplicarDescuento.bind(this)
+
+    this.vDOM.querySelector("img").onclick = () => {
+      this.imagen = prompt("Ingrese la URL de una nueva imagen:")
+      this.Mostrar()
+      this.sincronizar()
+    }
 
     // ↓ Anexarlo (mostrarlo) en la interfaz...
     if( !this.state.anexado ){
@@ -94,7 +102,6 @@ class Producto {
       this.state.anexado = true
     }
 
-    this.sincronizar()
   }
 
   aplicarDescuento(valor = false){
@@ -105,25 +112,23 @@ class Producto {
     this.precio = this.precio - importe
 
     this.Mostrar()
+    this.sincronizar()
   }
 
   sincronizar(){
     //¿como?
     let storage = JSON.parse( localStorage.getItem("PRODUCTOS") ) //<-- de JSON a Object
 
+    //let foundItem = storage.find(item => item.idProducto == this.ID)
+    let foundIndex = storage.findIndex(item => item.idProducto == this.ID)
 
-    storage.forEach(item => {
+    //storage[foundIndex]. //<-- { idProducto:???,Nombre:"???",Precio:???,Marca:"???",Categoria:"???",Presentacion:"???",Stock:???,Imagen:"???",Disponible:???}
 
-        if( item.idProducto == this.ID ){
+    storage[foundIndex].Precio = this.precio
+    storage[foundIndex].Imagen = this.imagen
+    storage[foundIndex].Disponible = this.disponible
 
-          item.Nombre = this.nombre
-          item.Stock = this.stock
-          item.Precio = this.precio
-          item.Disponible = this.disponible
-          return
-        }
-
-    })
+    console.log( storage[foundIndex] )
 
     localStorage.setItem("PRODUCTOS", JSON.stringify(storage) ) //<-- de Object a JSON
 
@@ -140,11 +145,11 @@ class Producto {
     if( datos instanceof Array ){
 
       //1) Recorrer el Array de Object para instanciar objetos Producto y retornarlos
-      return datos.map(item => new Producto(item.idProducto, item.Nombre, item.Stock, item.Precio, item.Imagen) ) //2) <-- Instanciar un objeto Producto con los datos de cada Object
+      return datos.map(item => new Producto(item.idProducto, item.Nombre, item.Stock, item.Precio, item.Imagen, item.Disponible) ) //2) <-- Instanciar un objeto Producto con los datos de cada Object
 
     } else if( datos instanceof Object ){
 
-      return new Producto(datos.idProducto, datos.Nombre, datos.Stock, datos.Precio, datos.Imagen)
+      return new Producto(datos.idProducto, datos.Nombre, datos.Stock, datos.Precio, datos.Imagen, datos.Disponible)
 
     } else {
       console.error("Ya fue... no convierto nada en Producto")
