@@ -17,8 +17,11 @@
 				</button>
 				<nav class="collapse navbar-collapse" id="menu">
 					<ul class="navbar-nav ml-auto">
-						<li class="nav-item active">
-							<a class="nav-link" href="#">&#x1F512; Ingresar</a>
+						<li class="nav-item">
+							<a id="login" class="nav-link" href="#">&#x1F512; Ingresar</a>
+						</li>
+						<li class="nav-item d-none">
+							<a id="logout" class="nav-link" href="#">Bienvenid@ <span>{{USUARIO}}</span> [x]</a>
 						</li>
 					</ul>
 				</nav>
@@ -49,6 +52,16 @@
 		<script src="producto.class.js"></script>
 		<script>
 			//////////// LOGIN CON GOOGLE ////////////
+			const bienvenida = () => {
+				//1) Mostrar el nombre del usuario
+				document.querySelector("#logout span").innerText = user.getName()
+
+				//2) Mostrar el boton de bienvenida + logout
+				document.querySelector("#logout").parentNode.classList.remove("d-none")
+
+				//3) Ocultar el boton de login
+				document.querySelector("#login").parentNode.classList.add("d-none")
+			}
 
 			gapi.load("auth2", function(){
 
@@ -64,6 +77,27 @@
 			// auth.signIn() //<-- Abre el Popup para loguearse
 			// auth.signOut() //<-- Cierra la sesion del usuario logueado
 			// auth.currentUser.get() //<-- Obtener los datos basicos del usuario logueado
+
+			document.querySelector("#login").onclick = function(e){
+				//Desactivo el Hipervinculo
+				e.preventDefault()
+
+				if( auth.isSignedIn.get() ){
+					//Esta logeado!
+					bienvenida()
+				} else {
+					//NO esta logeado!
+					auth.signIn().then(function(){ //<-- acá ya se logeo...
+						
+						//1) Obtener los datos del usuario
+						window.user = auth.currentUser.get().getBasicProfile()
+
+						//2) Dar la bienvenida
+						bienvenida()
+					})
+				}
+
+			}
 
 
 			//////////// LOGIN CON GOOGLE ////////////
