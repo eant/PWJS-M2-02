@@ -53,13 +53,16 @@
 		<script>
 			//////////// LOGIN CON GOOGLE ////////////
 			const bienvenida = () => {
-				//1) Mostrar el nombre del usuario
+				//1) Obtener los datos del usuario
+				window.user = auth.currentUser.get().getBasicProfile()
+
+				//2) Mostrar el nombre del usuario
 				document.querySelector("#logout span").innerText = user.getName()
 
-				//2) Mostrar el boton de bienvenida + logout
+				//3) Mostrar el boton de bienvenida + logout
 				document.querySelector("#logout").parentNode.classList.remove("d-none")
 
-				//3) Ocultar el boton de login
+				//4) Ocultar el boton de login
 				document.querySelector("#login").parentNode.classList.add("d-none")
 			}
 
@@ -88,18 +91,25 @@
 				} else {
 					//NO esta logeado!
 					auth.signIn().then(function(){ //<-- acá ya se logeo...
-						
-						//1) Obtener los datos del usuario
-						window.user = auth.currentUser.get().getBasicProfile()
-
-						//2) Dar la bienvenida
 						bienvenida()
 					})
 				}
 
 			}
 
+			document.querySelector("#logout").onclick = function(e){
+				//1) Cerrar la sesion del usuario
+				auth.signOut()
 
+				//2) Borrar los datos del usuario
+				window.user = null
+
+				//3) Ocultar el logout
+				this.parentNode.classList.add("d-none")
+
+				//4) Mostrar el login
+				document.querySelector("#login").parentNode.classList.remove("d-none")
+			}
 			//////////// LOGIN CON GOOGLE ////////////
 			
 
